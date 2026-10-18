@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' blob: data:; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Просмотрщик КТ</title>
+    <script type="module" crossorigin src="./assets/index-BVe2QRWT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dx1hAmU8.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <strong>Просмотрщик КТ</strong>
+      <button id="open-folder" class="btn" type="button">Открыть папку или диск</button>
+      <label class="btn btn-secondary">
+        Открыть файлы или .zip
+        <input id="file-input" type="file" multiple hidden />
+      </label>
+      <input id="folder-input" type="file" webkitdirectory hidden />
+      <button id="anonymize" class="btn btn-secondary" type="button" disabled title="Удалить персональные данные и сохранить снимки в .zip для пересылки">Анонимизировать → .zip</button>
+      <span id="status" class="status">Выберите папку с диска пациента, .zip-архив или перетащите их в окно.</span>
+      <span class="disclaimer">Учебный инструмент. Не для постановки диагноза. Файлы не покидают компьютер.</span>
+      <a class="btn btn-secondary help-link" href="./help.html" target="_blank" rel="noopener">Справка</a>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div id="auto-reason" class="auto-reason" hidden></div>
+        <div id="series-list" class="series-list"></div>
+        <div id="measurements" class="measurements" hidden></div>
+      </aside>
+      <main class="viewer">
+        <div id="scan-type-bar" class="scan-type-bar" hidden></div>
+        <div id="cbct-warning" class="cbct-warning" hidden></div>
+        <div id="volume-warning" class="volume-warning" hidden></div>
+        <div id="view-toolbar" class="view-toolbar" hidden>
+          <div id="preset-buttons" class="segmented" title="Пресеты окна"></div>
+          <span class="toolbar-label">Левая кнопка:</span>
+          <div id="left-tool-buttons" class="segmented">
+            <button type="button" data-tool="crosshairs" title="Щелчок или перетаскивание переносит точку пересечения во всех плоскостях">Перекрестие</button>
+            <button type="button" data-tool="windowLevel" title="Тянуть мышью: вправо-влево — ширина окна, вверх-вниз — уровень">Окно</button>
+            <button type="button" data-tool="pan">Сдвиг</button>
+            <button type="button" data-tool="zoom">Зум</button>
+          </div>
+          <span class="toolbar-label">Измерить:</span>
+          <div id="measure-buttons" class="segmented">
+            <button type="button" data-tool="length" title="Линейка: щелчок — начало, щелчок — конец. Расстояние в мм.">Линейка</button>
+            <button type="button" data-tool="angle" title="Угол: три щелчка — точка на первой линии, вершина, точка на второй линии.">Угол</button>
+            <button type="button" data-tool="probe" title="Плотность в точке: щелчок по снимку. Для КЛКТ — условные HU.">Плотность</button>
+          </div>
+          <button id="reset-view" type="button" class="btn btn-secondary btn-small" title="Вписать срезы в экран и вернуть перекрестие в центр">Вписать</button>
+          <button id="tags-toggle" type="button" class="btn btn-secondary btn-small" title="Параметры исследования и все DICOM-теги">Теги DICOM</button>
+          <span id="voi-readout" class="voi-readout"></span>
+          <span class="toolbar-hint" title="Колесо — срезы в плоскости под курсором; Ctrl+колесо или правая кнопка — зум; средняя кнопка — сдвиг.&#10;↑/↓, PageUp/PageDown, Home/End — срезы плоскости в синей рамке; ползунок внизу — то же.&#10;Перекрестие: щелчок или перетаскивание — перейти к точке; кружки на концах линий — поворот плоскостей; «Вписать» — стандартные плоскости.&#10;Двойной щелчок по плоскости или 3D — на весь экран и обратно.&#10;Буквы по краям: R/L — право/лево, A/P — перед/зад, S/I — верх/низ пациента.&#10;3D: левая кнопка — вращать, колесо — зум; порог плотности — ползунок в окне 3D.&#10;Delete — удалить выделенное измерение.">ⓘ Управление</span>
+        </div>
+        <div class="viewport-wrap">
+          <div id="stack-view" class="stack-view" hidden>
+            <div id="viewport" class="viewport"></div>
+          </div>
+          <div id="mpr-view" class="mpr-grid" hidden></div>
+          <div id="overlay" class="overlay" hidden>
+            <div id="overlay-series"></div>
+            <div id="overlay-slice"></div>
+            <div id="overlay-voi"></div>
+          </div>
+          <div id="placeholder" class="placeholder">Здесь появится выбранная серия.<br />Прокрутка срезов — колесо мыши.</div>
+        </div>
+        <div id="slice-bar" class="slice-bar" hidden>
+          <input id="slice-slider" type="range" min="0" max="0" step="1" value="0" aria-label="Срез" />
+          <span id="slice-label" class="slice-label"></span>
+        </div>
+      </main>
+      <aside id="tags-panel" class="tags-panel" hidden></aside>
+    </div>
+    <dialog id="anon-dialog" class="dialog"></dialog>
+    <div id="drop-overlay" class="drop-overlay" hidden>Отпустите папку, файлы или .zip</div>
+  </body>
+</html>
