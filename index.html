@@ -5,8 +5,8 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' blob: data:; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Просмотрщик КТ</title>
-    <script type="module" crossorigin src="./assets/index-BuFqi42G.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C2VsGLiV.css">
+    <script type="module" crossorigin src="./assets/index-D7CNcZ1q.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DkYC0LRc.css">
   </head>
   <body>
     <header class="topbar">
@@ -55,7 +55,7 @@
           <button id="reset-view" type="button" class="btn btn-secondary btn-small" title="Вписать срезы в экран и вернуть перекрестие в центр">Вписать</button>
           <button id="tags-toggle" type="button" class="btn btn-secondary btn-small" title="Параметры исследования и все DICOM-теги">Теги DICOM</button>
           <span id="voi-readout" class="voi-readout"></span>
-          <span class="toolbar-hint" title="Колесо – срезы в плоскости под курсором; Ctrl+колесо или правая кнопка – зум; средняя кнопка – сдвиг.&#10;↑/↓, PageUp/PageDown, Home/End – срезы плоскости в синей рамке; ползунок внизу – то же.&#10;Перекрестие: щелчок или перетаскивание – перейти к точке; кружки на концах линий – поворот плоскостей; «Вписать» – стандартные плоскости.&#10;Двойной щелчок по плоскости или 3D – на весь экран и обратно.&#10;Буквы по краям: R/L – право/лево, A/P – перед/зад, S/I – верх/низ пациента.&#10;3D: левая кнопка – вращать, колесо – зум; порог плотности – ползунок в окне 3D.&#10;Delete – удалить выделенное измерение.">ⓘ Управление</span>
+          <span class="toolbar-hint" title="Колесо – срезы в плоскости под курсором; Ctrl+колесо или правая кнопка – зум; средняя кнопка – сдвиг.&#10;↑/↓, PageUp/PageDown, Home/End – срезы плоскости в синей рамке; ползунок внизу – то же.&#10;Перекрестие: щелчок или перетаскивание – перейти к точке; кружки на концах линий – поворот плоскостей; «Вписать» – стандартные плоскости.&#10;Одно окно на весь экран: переключатель внизу, значок ⤢ в углу окна, клавиши 1–4 или двойной щелчок; Esc или 0 – все четыре.&#10;Буквы по краям: R/L – право/лево, A/P – перед/зад, S/I – верх/низ пациента.&#10;3D: левая кнопка – вращать, колесо – зум; порог плотности – ползунок в окне 3D.&#10;Delete – удалить выделенное измерение.">ⓘ Управление</span>
         </div>
         <div class="viewport-wrap">
           <div id="stack-view" class="stack-view" hidden>
@@ -70,6 +70,13 @@
           <div id="placeholder" class="placeholder">Здесь появится выбранная серия.<br />Прокрутка срезов – колесо мыши.</div>
         </div>
         <div id="slice-bar" class="slice-bar" hidden>
+          <div id="layout-buttons" class="segmented layout-buttons" title="Какие окна показывать. Клавиши: 1–4 – окно на весь экран, 0 или Esc – все четыре" hidden>
+            <button type="button" data-layout="grid">4 окна</button>
+            <button type="button" data-layout="0">Аксиальная</button>
+            <button type="button" data-layout="1">Коронарная</button>
+            <button type="button" data-layout="2">Сагиттальная</button>
+            <button type="button" data-layout="3">3D</button>
+          </div>
           <input id="slice-slider" type="range" min="0" max="0" step="1" value="0" aria-label="Срез" />
           <span id="slice-label" class="slice-label"></span>
         </div>
